@@ -45,9 +45,9 @@ def puzzle_input() -> Dict[int, Scanner]:
 
 
 def caught_crossing(
-        firewall: Dict[int, Scanner], num_layers: int) -> bool:
+        firewall: Dict[int, Scanner], width: int) -> bool:
     """Returns True if the packet is caught while crossing, otherwise False."""
-    for packet_pos in range(num_layers):
+    for packet_pos in range(width):
         # check if the scanner is captured in this position
         if packet_pos in firewall and firewall[packet_pos].pos == 0:
             return True
@@ -70,7 +70,7 @@ def copy_firewall(
 def find_start(firewall: Dict[int, Scanner]) -> int:
     """Attempt crossing until we make it uncaught."""
     loop_firewall = copy_firewall(firewall)
-    num_layers = max(firewall.keys()) + 1
+    width = max(firewall.keys()) + 1
 
     for t_start in itertools.count(0):
         # save the state of the firewall before we start to cross
@@ -79,7 +79,7 @@ def find_start(firewall: Dict[int, Scanner]) -> int:
 
         # check if the packet is caught while attempting a crossing starting
         # at this time step
-        if caught_crossing(loop_firewall, num_layers):
+        if caught_crossing(loop_firewall, width):
             # reset to pre-check state and advance once
             # so we can attempt a crossing at the next timestep
             loop_firewall = copy_firewall(pre_check_firewall)

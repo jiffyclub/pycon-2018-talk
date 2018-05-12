@@ -24,9 +24,9 @@ def calc_scanner_pos(scanner_height: int, time_step: int) -> int:
         else full_cycle - cycle_position)
 
 
-def caught_crossing(firewall: dict, num_layers: int, t_start: int) -> bool:
+def caught_crossing(firewall: dict, width: int, t_start: int) -> bool:
     """Returns True if the packet is caught while crossing, otherwise False."""
-    for pos in range(num_layers):
+    for pos in range(width):
         if pos in firewall:
             scanner_height = firewall[pos]
             scanner_pos = calc_scanner_pos(scanner_height, t_start + pos)
@@ -36,9 +36,9 @@ def caught_crossing(firewall: dict, num_layers: int, t_start: int) -> bool:
 
 
 def find_start(firewall: dict) -> int:
-    num_layers = max(firewall.keys()) + 1
+    width = max(firewall.keys()) + 1
     for t_start in itertools.count(0):
-        if not caught_crossing(firewall, num_layers, t_start):
+        if not caught_crossing(firewall, width, t_start):
             break
     return t_start
 
