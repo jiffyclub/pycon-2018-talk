@@ -44,7 +44,7 @@ def puzzle_input() -> Dict[int, Scanner]:
         return init_firewall(f)
 
 
-def check_capture(
+def caught_crossing(
         firewall: Dict[int, Scanner], num_layers: int) -> bool:
     """Returns True if the packet is caught while crossing, otherwise False."""
     for packet_pos in range(num_layers):
@@ -79,7 +79,7 @@ def find_start(firewall: Dict[int, Scanner]) -> int:
 
         # check if the packet is caught while attempting a crossing starting
         # at this time step
-        if check_capture(loop_firewall, num_layers):
+        if caught_crossing(loop_firewall, num_layers):
             # reset to pre-check state and advance once
             # so we can attempt a crossing at the next timestep
             loop_firewall = copy_firewall(pre_check_firewall)

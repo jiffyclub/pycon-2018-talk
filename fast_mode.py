@@ -9,7 +9,7 @@ def puzzle_input() -> dict:
                 map(int, row.strip().split(': ')) for row in f)}
 
 
-def scanner_layer(scanner_height: int, time_step: int) -> int:
+def calc_scanner_pos(scanner_height: int, time_step: int) -> int:
     """
     Calculates the position of a scanner within its range at a
     given time step.
@@ -24,12 +24,12 @@ def scanner_layer(scanner_height: int, time_step: int) -> int:
         else full_cycle - cycle_position)
 
 
-def check_capture(firewall: dict, num_layers: int, t_start: int) -> bool:
+def caught_crossing(firewall: dict, num_layers: int, t_start: int) -> bool:
     """Returns True if the packet is caught while crossing, otherwise False."""
     for pos in range(num_layers):
         if pos in firewall:
             scanner_height = firewall[pos]
-            scanner_pos = scanner_layer(scanner_height, t_start + pos)
+            scanner_pos = calc_scanner_pos(scanner_height, t_start + pos)
             if scanner_pos == 0:
                 return True
     return False
@@ -38,7 +38,7 @@ def check_capture(firewall: dict, num_layers: int, t_start: int) -> bool:
 def find_start(firewall: dict) -> int:
     num_layers = max(firewall.keys()) + 1
     for t_start in itertools.count(0):
-        if not check_capture(firewall, num_layers, t_start):
+        if not caught_crossing(firewall, num_layers, t_start):
             break
     return t_start
 
