@@ -21,6 +21,8 @@ for improved performance.
 
 ## Notes
 
+Talk video: https://www.youtube.com/watch?v=yrRqNzJTBjk
+
 Slides [here](./presentation/Python%20Performance%20Investigation%20-%20PyCon%202018.pdf).
 
 Use `snakeviz slow_mode.cprof` to see the 
